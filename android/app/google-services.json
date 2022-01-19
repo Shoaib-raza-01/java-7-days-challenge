@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "733119691705",
+    "project_id": "java-7-days-challenge",
+    "storage_bucket": "java-7-days-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733119691705:android:1aa2f8448fdb71febad468",
+        "android_client_info": {
+          "package_name": "com.example.jsdc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733119691705-68oj4hagd0k4diegeugchtffgroigkmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDui53OknO2dqmPz9bNv-5W4UbkWoEtSGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733119691705-68oj4hagd0k4diegeugchtffgroigkmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
