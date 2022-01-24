@@ -1,10 +1,10 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
 import 'package:jsdc/main.dart';
 import 'package:jsdc/screens/dashboard.dart';
+import 'package:jsdc/util/google_signin.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
@@ -30,85 +30,100 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future logout() async {
-    await googleSignIn.disconnect();
+    // await googleSignIn.disconnect();
     await FirebaseAuth.instance.signOut();
   }
 }
 
-class AuthController extends GetxController {
-  static AuthController instance = Get.find();
-  late Rx<User?> _user; // access user details
-  FirebaseAuth auth = FirebaseAuth.instance;
+// // for email provider
 
-  @override
-  void onReady() {
-    super.onReady();
-    _user = Rx<User?>(auth.currentUser);
-    _user.bindStream(auth.userChanges()); //our user will be notified
-    ever(_user, _initialScreeen);
-  }
+// class AuthController extends GetxController {
+//   static AuthController instance = Get.find();
+//   late Rx<User?> _user; // access user details
+//   FirebaseAuth auth = FirebaseAuth.instance;
 
-  _initialScreeen(User? user) {
-    if (user == null) {
-      Get.offAll(() => FirstScreen());
-    } else {
-      Get.offAll(() => Dashboard());
-    }
-  }
+//   @override
+//   void onReady() {
+//     super.onReady();
+//     _user = Rx<User?>(auth.currentUser);
+//     _user.bindStream(auth.userChanges()); //our user will be notified
+//     ever(_user, _initialScreeen);
+//   }
 
-  void register(String email, password) async {
-    try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-    } catch (e) {
-      Get.snackbar(
-        "About User",
-        " User message",
-        backgroundColor: Colors.blue,
-        snackPosition: SnackPosition.BOTTOM,
-        titleText: const Text(
-          "Account creation failed",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        messageText: Text(
-          e.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      );
-    }
-  }
+//   _initialScreeen(User? user) {
+//     if (user == null) {
+//       Get.offAll(() => FirstScreen());
+//     } else {
+//       Get.offAll(() => Dashboard());
+//     }
+//   }
 
-  void login(String email, password) async {
-    try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
-      Get.snackbar(
-        "About login",
-        " Login message",
-        backgroundColor: Colors.blue,
-        snackPosition: SnackPosition.BOTTOM,
-        titleText: const Text(
-          "Login failed",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        messageText: Text(
-          e.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      );
-    }
-  }
+//   void register(String email, password) async {
+//     try {
+//       await auth.createUserWithEmailAndPassword(
+//           email: email, password: password);
+//     } catch (e) {
+//       Get.snackbar(
+//         "About User",
+//         " User message",
+//         backgroundColor: Colors.blue,
+//         snackPosition: SnackPosition.BOTTOM,
+//         titleText: const Text(
+//           "Account creation failed",
+//           style: TextStyle(
+//             color: Colors.white,
+//           ),
+//         ),
+//         messageText: Text(
+//           e.toString(),
+//           style: const TextStyle(
+//             color: Colors.white,
+//           ),
+//         ),
+//       );
+//     }
+//   }
 
-  void logOut() async{
-    await auth.signOut();
-    
-  }
-}
+//   void login(String email, password) async {
+//     try {
+//       await auth.signInWithEmailAndPassword(email: email, password: password);
+//     } catch (e) {
+//       Get.snackbar(
+//         "About login",
+//         " Login message",
+//         backgroundColor: Colors.blue,
+//         snackPosition: SnackPosition.BOTTOM,
+//         titleText: const Text(
+//           "Login failed",
+//           style: TextStyle(
+//             color: Colors.white,
+//           ),
+//         ),
+//         messageText: Text(
+//           e.toString(),
+//           style: const TextStyle(
+//             color: Colors.white,
+//           ),
+//         ),
+//       );
+//     }
+//   }
+
+//   void logOut() async{
+//     await auth.signOut();
+
+//   }
+// }
+
+// FirebaseAuth auth = FirebaseAuth.instance;
+// final googleSignIn = GoogleSignIn();
+// Future<bool> googleSignIn() async {
+//   GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+//   if (googleSignInAccount != null) {
+//     GoogleSignInAuthentication googleSignInAuthentication =
+//         await googleSignInAccount.authentication;
+//     AuthCredential credential = GoogleAuthProvider.getCre
+//     return Future.value(true);
+//   }
+// }
+

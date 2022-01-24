@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jsdc/main.dart';
-import 'package:jsdc/util/google_signin.dart';
-import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
-  
-   const Dashboard({Key? key}) : super(key: key);
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -16,17 +13,25 @@ class _DashboardState extends State<Dashboard> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser!;
 
+  String name = " User";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Dashboard"),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 6),
+            child: Icon(Icons.messenger),
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(user.displayName!),
+              accountName: Text(name),
               accountEmail: Text(user.email!),
               currentAccountPicture: Container(
                 height: 60,
@@ -34,7 +39,8 @@ class _DashboardState extends State<Dashboard> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   image: DecorationImage(
-                    image: NetworkImage(user.photoURL!),
+                    // image: NetworkImage(user.photoURL!),
+                    image: AssetImage('assets/images/blue-wallpaper-3.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -57,7 +63,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             ListTile(
               leading: Icon(Icons.contact_mail),
-              title: Text("COntact us"),
+              title: Text("Contact us"),
               onTap: () {},
             ),
             ListTile(
@@ -73,11 +79,17 @@ class _DashboardState extends State<Dashboard> {
                 //     Provider.of<GoogleSignInProvider>(context, listen: false);
                 // provider.logout();
                 // AuthController.instance.logOut();
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (BuildContext) => FirstScreen(),
+                // Navigator.of(context).pushAndRemoveUntil(
+                //   MaterialPageRoute(
+                //     builder: (BuildContext) => FirstScreen(),
+                //   ),
+                //   (Route route) => false,
+                // );
+                await FirebaseAuth.instance.signOut().whenComplete(() =>
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const FirstScreen()
+                    ),
                   ),
-                  (Route route) => false,
                 );
               },
             ),
