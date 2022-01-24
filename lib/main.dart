@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:jsdc/screens/dashboard.dart';
 import 'package:jsdc/screens/login.dart';
 import 'package:jsdc/util/google_SignIn.dart';
+import 'package:jsdc/util/loggingin.dart';
 import 'package:jsdc/util/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]
-  );
-  await Firebase.initializeApp();
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   runApp(MyApp());
 }
 
@@ -22,14 +23,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
-        child: MaterialApp(
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const FirstScreen(),
+          home: const LoggingIn(),
           routes: {
-            MyRoutes.dashboard: (context) => const Dashboard(),
+            MyRoutes.dashboard: (context) =>  Dashboard(),
             MyRoutes.login: (context) => const LoginPage(),
           },
         ),
@@ -45,11 +46,10 @@ class FirstScreen extends StatefulWidget {
 
 class _FirstScreenState extends State<FirstScreen> {
   bool changeButton = false;
-  late String email;
-  late String password;
-  late String Fname;
-  late String Lname;
-  late String RePass;
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var cnfPassControlller = TextEditingController();
+
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool _showPass = false;
   void _toggle() {
@@ -117,45 +117,7 @@ class _FirstScreenState extends State<FirstScreen> {
                               alignment: WrapAlignment.end,
                               children: [
                                 TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: "First Name",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  validator: (_val) {
-                                    if (_val!.isEmpty) {
-                                      return "Cant't be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (val) {
-                                    Fname = val;
-                                  },
-                                ),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: "Last Name",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  validator: (_val) {
-                                    if (_val!.isEmpty) {
-                                      return "Cant't be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (val) {
-                                    Lname = val;
-                                  },
-                                ),
-                                TextFormField(
-                                  //   onSaved: (emailValue) {        //firebase
-                                  //   _email = emailValue!;         //firebase
-                                  // },                                //firebase
+                                  controller: emailController,
                                   decoration: InputDecoration(
                                     hintText: "Email",
                                     border: OutlineInputBorder(
@@ -163,18 +125,19 @@ class _FirstScreenState extends State<FirstScreen> {
                                     ),
                                     // errorStyle: TextStyle(color: Colors.black),    //firebase
                                   ),
-                                  validator: (_val) {
-                                    if (_val!.isEmpty) {
-                                      return "Cant't be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (val) {
-                                    email = val;
-                                  },
+                                  // validator: (_val) {
+                                  //   if (_val!.isEmpty) {
+                                  //     return "Cant't be empty";
+                                  //   } else {
+                                  //     return null;
+                                  //   }
+                                  // },
+                                  // onChanged: (val) {
+                                  //   email = val;
+                                  // },
                                 ),
                                 TextFormField(
+                                  controller: passwordController,
                                   obscureText: !_showPass,
                                   decoration: InputDecoration(
                                     suffixIcon: GestureDetector(
@@ -193,60 +156,62 @@ class _FirstScreenState extends State<FirstScreen> {
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                   ),
-                                  validator: (_val) {
-                                    if (_val!.isEmpty) {
-                                      return "Cant't be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (val) {
-                                    password = val;
-                                  },
                                 ),
                                 TextFormField(
+                                  controller: cnfPassControlller,
                                   obscureText: !_show,
-                                  //   onSaved: (passValue) {
-                                  //   _password = passValue!;
-                                  //  },
                                   decoration: InputDecoration(
-                                    suffixIcon: GestureDetector(
-                                      onTap: () {
-                                        _visible();
-                                      },
-                                      child: Icon(
-                                        _show
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                        color: Colors.grey,
+                                      suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          _visible();
+                                        },
+                                        child: Icon(
+                                          _show
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          color: Colors.grey,
+                                        ),
                                       ),
-                                    ),
-                                    hintText: "Re-enter password",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    // errorStyle: TextStyle(color: Colors.black),
-                                  ),
-                                  validator: (_val) {
-                                    if (_val!.isEmpty) {
-                                      return "Cant't be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (val) {
-                                    RePass = val;
-                                  },
+                                      hintText: "Confirm password",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      )),
                                 ),
                                 InkWell(
                                   onTap: () async {
-                                    setState(() {
+                                      if(passwordController.text.trim() == cnfPassControlller.text.trim()){
+                                        AuthController.instance.register(
+                                        emailController.text.trim(),
+                                        passwordController.text.trim());
+                                        setState(() {
                                       changeButton = true;
                                     });
                                     await Future.delayed(
                                         const Duration(seconds: 1));
-                                    Navigator.pushNamed(
-                                        context, MyRoutes.dashboard);
+                                      }  else{
+                                        Get.snackbar(
+                                          "About Password",
+                                          " Password message",
+                                          backgroundColor: Colors.blue,
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          titleText: const Text(
+                                            "Account creation failed",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          messageText: const Text(
+                                            "Password didn't matched, re-enter password",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      }
+
+                                    
+                                    // Navigator.pushNamed(
+                                    //     context, MyRoutes.dashboard);
                                   },
                                   child: AnimatedContainer(
                                     height: changeButton ? 50 : 40,

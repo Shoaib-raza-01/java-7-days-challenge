@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jsdc/main.dart';
 import 'package:jsdc/util/google_signin.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  
+   const Dashboard({Key? key}) : super(key: key);
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -22,16 +24,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       drawer: Drawer(
         child: ListView(
-          padding: const EdgeInsets.all(8),
           children: [
-            // UserAccountsDrawerHeader(
-            //   accountName: Text(""),
-            //   accountEmail: Text(""),
-            //   currentAccountPicture: CircleAvatar(
-            //     backgroundColor: Colors.blue,
-            //     child: Image.asset('assets/images/facebook.png'),
-            //     ),
-            //   ),
             UserAccountsDrawerHeader(
               accountName: Text(user.displayName!),
               accountEmail: Text(user.email!),
@@ -47,29 +40,45 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
-            // Container(
-            //   height: MediaQuery.of(context).size.height/2.7,
-            //   // width: 90,
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(100),
-            //     image:  DecorationImage(
-            //       image: AssetImage('assets/images/logo.jpeg'),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
             ListTile(
               leading: Icon(Icons.person),
               title: Text("Profile"),
               onTap: () {},
             ),
             ListTile(
+              leading: Icon(Icons.file_copy_rounded),
+              title: Text("Create resume"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.computer_outlined),
+              title: Text("Courses"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.contact_mail),
+              title: Text("COntact us"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: () {},
+            ),
+            ListTile(
               title: Text("Sign out"),
-              onTap: () {
-                final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.logout();
+              onTap: () async {
+                // google logout method
+                // final provider =
+                //     Provider.of<GoogleSignInProvider>(context, listen: false);
+                // provider.logout();
+                // AuthController.instance.logOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (BuildContext) => FirstScreen(),
+                  ),
+                  (Route route) => false,
+                );
               },
             ),
           ],
