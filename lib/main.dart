@@ -2,10 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:jsdc/screens/QNA.dart';
+import 'package:jsdc/screens/syntax.dart';
+import 'package:jsdc/screens/contact.dart';
 import 'package:jsdc/screens/dashboard.dart';
 import 'package:jsdc/screens/datatypes.dart';
 import 'package:jsdc/screens/login.dart';
+import 'package:jsdc/screens/notification.dart';
+import 'package:jsdc/screens/topics.dart';
+import 'package:jsdc/screens/variables.dart';
 import 'package:jsdc/util/google_SignIn.dart';
 import 'package:jsdc/util/loggingin.dart';
 import 'package:jsdc/util/routes.dart';
@@ -68,8 +72,16 @@ class MyApp extends StatelessWidget {
           routes: {
             MyRoutes.dashboard: (context) => const Dashboard(),
             MyRoutes.login: (context) => const LoginPage(),
-            MyRoutes.question:(context) => const QuestionsPage(),
-            MyRoutes.datatypes: (context) => const  DatatypePage(),
+// <<<<<<< questions
+            MyRoutes.syntax: (context) => const SyntaxPage(),
+            MyRoutes.notification: (context) => const NotificationPage(),
+            MyRoutes.contactUs: (context) => const ContactUsPage(),
+            MyRoutes.topics: (context) => const TopicsPage(),
+            MyRoutes.variable: (context) => const VariablePage(),
+// =======
+//             MyRoutes.question:(context) => const QuestionsPage(),
+//             MyRoutes.datatypes: (context) => const  DatatypePage(),
+// >>>>>>> main
           },
         ),
       );
@@ -160,10 +172,10 @@ class _FirstScreenState extends State<FirstScreen> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height / 2,
+                          height: MediaQuery.of(context).size.height/2,
                           child: Form(
                             key: formkey,
                             child: Padding(
@@ -177,7 +189,6 @@ class _FirstScreenState extends State<FirstScreen> {
                                     onSaved: (emailValue) {
                                       _emailController = emailValue!;
                                     },
-                                    // controller: emailController,
                                     decoration: InputDecoration(
                                       hintText: "Email",
                                       border: OutlineInputBorder(
@@ -185,16 +196,6 @@ class _FirstScreenState extends State<FirstScreen> {
                                       ),
                                       // errorStyle: TextStyle(color: Colors.black),    //firebase
                                     ),
-                                    // validator: (_val) {
-                                    //   if (_val!.isEmpty) {
-                                    //     return "Cant't be empty";
-                                    //   } else {
-                                    //     return null;
-                                    //   }
-                                    // },
-                                    // onChanged: (val) {
-                                    //   email = val;
-                                    // },
                                   ),
                                   TextFormField(
                                     onSaved: (passValue) {
@@ -338,13 +339,13 @@ class _FirstScreenState extends State<FirstScreen> {
                                       const Text(
                                         "Already have an account?",
                                         style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          // fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                           color: Colors.grey,
                                         ),
                                       ),
-                                      TextButton(
-                                        onPressed: () {
+                                      InkWell(
+                                        onTap: () {
                                           Navigator.pushNamed(
                                               context, MyRoutes.login);
                                         },
