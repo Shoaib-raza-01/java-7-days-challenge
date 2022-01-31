@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:jsdc/screens/QNA.dart';
 import 'package:jsdc/screens/dashboard.dart';
+import 'package:jsdc/screens/datatypes.dart';
 import 'package:jsdc/screens/login.dart';
 import 'package:jsdc/util/google_SignIn.dart';
 import 'package:jsdc/util/loggingin.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.dashboard: (context) => const Dashboard(),
             MyRoutes.login: (context) => const LoginPage(),
             MyRoutes.question:(context) => const QuestionsPage(),
+            MyRoutes.datatypes: (context) => const  DatatypePage(),
           },
         ),
       );
