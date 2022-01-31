@@ -7,8 +7,7 @@ class MyRoutes {
   static String contactUs = "/contact";
   static String topics = "/topic";
   static String variable = "/varString";
-// =======
-//   static String question = "/quesAns";
-//   static String datatypes = "/datatypes";
+
+  static String datatypes = "/datatypes";
 // >>>>>>> main
 }

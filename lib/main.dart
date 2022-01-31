@@ -72,16 +72,12 @@ class MyApp extends StatelessWidget {
           routes: {
             MyRoutes.dashboard: (context) => const Dashboard(),
             MyRoutes.login: (context) => const LoginPage(),
-// <<<<<<< questions
             MyRoutes.syntax: (context) => const SyntaxPage(),
             MyRoutes.notification: (context) => const NotificationPage(),
             MyRoutes.contactUs: (context) => const ContactUsPage(),
             MyRoutes.topics: (context) => const TopicsPage(),
             MyRoutes.variable: (context) => const VariablePage(),
-// =======
-//             MyRoutes.question:(context) => const QuestionsPage(),
-//             MyRoutes.datatypes: (context) => const  DatatypePage(),
-// >>>>>>> main
+            MyRoutes.datatypes: (context) => const  DatatypePage(),
           },
         ),
       );
