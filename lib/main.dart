@@ -2,6 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:jsdc/screens/array.dart';
+import 'package:jsdc/screens/bool_string.dart';
+import 'package:jsdc/screens/if_else_stats.dart';
+import 'package:jsdc/screens/jump_stats.dart';
+import 'package:jsdc/screens/loops.dart';
+import 'package:jsdc/screens/oop_concept.dart';
+import 'package:jsdc/screens/operator_math.dart';
+import 'package:jsdc/screens/sort_search.dart';
+import 'package:jsdc/screens/switchcase.dart';
 import 'package:jsdc/screens/syntax.dart';
 import 'package:jsdc/screens/contact.dart';
 import 'package:jsdc/screens/dashboard.dart';
@@ -78,6 +87,15 @@ class MyApp extends StatelessWidget {
             MyRoutes.topics: (context) => const TopicsPage(),
             MyRoutes.variable: (context) => const VariablePage(),
             MyRoutes.datatypes: (context) => const  DatatypePage(),
+            MyRoutes.operator: (context) => const OperatorPage(),
+            MyRoutes.boolstr: (context) => const StringBoolPage(),
+            MyRoutes.ifelse: (context) => const IfElseStatPage(),
+            MyRoutes.switchcase: (context) => const SwitchCase(),
+            MyRoutes.loops: (context) => const LoopsPage(),
+            MyRoutes.jump: (context) => const JumpPage(),
+            MyRoutes.array: (context) => const ArrayPage(),
+            MyRoutes.sort: (context) => const SortSearchPage(),
+            MyRoutes.oopconcept: (context) => const OOPconceptPage(),
           },
         ),
       );
