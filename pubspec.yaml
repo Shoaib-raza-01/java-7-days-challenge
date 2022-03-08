@@ -38,7 +38,8 @@ dependencies:
   get: ^4.6.1
   flutter_local_notifications: ^9.2.0
   firebase_messaging: ^11.2.5
-  firebase_database: ^9.0.6       
+  firebase_database: ^9.0.6  
+  auto_size_text: ^3.0.0      
   
 
 

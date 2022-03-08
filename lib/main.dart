@@ -9,6 +9,7 @@ import 'package:jsdc/screens/jump_stats.dart';
 import 'package:jsdc/screens/loops.dart';
 import 'package:jsdc/screens/oop_concept.dart';
 import 'package:jsdc/screens/operator_math.dart';
+import 'package:jsdc/screens/resume_page.dart';
 import 'package:jsdc/screens/sort_search.dart';
 import 'package:jsdc/screens/switchcase.dart';
 import 'package:jsdc/screens/syntax.dart';
@@ -30,7 +31,7 @@ import 'package:get/get.dart';
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'High importance channel', //id
     'High importance notofication', //title
-    importance: Importance.high,
+    importance: Importance.max,
     playSound: true);
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -96,6 +97,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.array: (context) => const ArrayPage(),
             MyRoutes.sort: (context) => const SortSearchPage(),
             MyRoutes.oopconcept: (context) => const OOPconceptPage(),
+            MyRoutes.resumeform: (context) => const ResumeFormPage(),
           },
         ),
       );
@@ -429,7 +431,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                                       GoogleSignInProvider>(
                                                   context,
                                                   listen: false);
-                                              provider.googleLogin();
+                                              provider.googleLogin();  
                                             }, //function for google
                                           ),
                                           InkWell(
