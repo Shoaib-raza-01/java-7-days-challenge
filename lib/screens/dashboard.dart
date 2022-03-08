@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jsdc/main.dart';
+import 'package:jsdc/screens/resume_page.dart';
 import 'package:jsdc/util/routes.dart';
 
 class Dashboard extends StatefulWidget {
@@ -20,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dashboard"),
+        title: const Text("Java 7 Days Challenge"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -35,18 +36,30 @@ class _DashboardState extends State<Dashboard> {
       ),
       drawer: Drawer(
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(name),
+              accountName: Text((() {
+                if (user.displayName != null) {
+                  return user.displayName!;
+                } else {
+                  return name;
+                }
+              })()),
               accountEmail: Text(user.email!),
               currentAccountPicture: Container(
                 height: 60,
                 width: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  image: const DecorationImage(
-                    // image: NetworkImage(user.photoURL!),
-                    image: AssetImage('assets/images/blue-wallpaper-3.jpg'),
+                  color: Colors.white12,
+                  image: DecorationImage(
+                    image: NetworkImage((() {
+                      if (user.photoURL != null) {
+                        return user.photoURL!;
+                      }
+                      return 'assets/images/blue-wallpaper-3.jpg';
+                    })()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -60,7 +73,10 @@ class _DashboardState extends State<Dashboard> {
             ListTile(
               leading: const Icon(Icons.file_copy_rounded),
               title: const Text("Create resume"),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResumeFormPage()));
+                // Navigator.of(context).pushNamed(MyRoutes.resumeform);
+              },
             ),
             ListTile(
               leading: const Icon(Icons.computer_outlined),
@@ -78,7 +94,48 @@ class _DashboardState extends State<Dashboard> {
               leading: const Icon(Icons.contact_mail),
               title: const Text("Contact us"),
               onTap: () {
-                Navigator.of(context).pushNamed(MyRoutes.contactUs);
+                // Navigator.of(context).pushNamed(MyRoutes.contactUs);
+                showGeneralDialog(
+                    context: context,
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      final curvedValue =
+                          Curves.easeInOutBack.transform(animation.value) - 1.0;
+                      return Transform(
+                        transform: Matrix4.translationValues(
+                            0.0, curvedValue * 200, 0.0),
+                        child: Opacity(
+                          opacity: animation.value,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 70),
+                            child: AlertDialog(
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              title: const Text("Feedback"),
+                              content: Column(
+                                children: [
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        hintText: "Enter your Email"),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    transitionDuration: const Duration(milliseconds: 200),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    pageBuilder: (context, animation1, annimation2) {
+                      return Column();
+                    });
               },
             ),
             ListTile(
@@ -113,4 +170,10 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
+
+  // AccName() {
+  //   if(user.displayName != null){
+
+  //   }
+  // }
 }
