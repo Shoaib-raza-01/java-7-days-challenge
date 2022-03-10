@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jsdc/util/google_signin.dart';
+import 'package:jsdc/screens/reset_pass.dart';
 import 'package:jsdc/util/routes.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,8 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  late String emailController ;
-  late String passwordController ;
+  late String emailController;
+  late String passwordController;
 
   final auth = FirebaseAuth.instance;
   bool _showPassword = false;
@@ -34,14 +34,14 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             //   background image   //
             SizedBox(
-              height: MediaQuery.of(context).size.height/3,
+              height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width,
               child: const Image(
                 image: AssetImage('assets/images/blue-wallpaper-7.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
-            
+
             Column(
               children: [
                 Container(
@@ -82,8 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                                   top: 15.0, right: 14, left: 14, bottom: 8),
                               child: TextFormField(
                                 onSaved: (newEmail) {
-                                  emailController =
-                                      newEmail! ;
+                                  emailController = newEmail!;
                                 },
                                 // controller: emailController,
                                 style: const TextStyle(
@@ -91,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
                                 ),
-                                    decoration: const InputDecoration(
+                                decoration: const InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(15),
@@ -111,8 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                   top: 15.0, right: 14, left: 14, bottom: 8),
                               child: TextFormField(
                                 onSaved: (newPassword) {
-                                  passwordController =
-                                      newPassword!;
+                                  passwordController = newPassword!;
                                 },
                                 // controller: passwordController,
                                 obscureText: !_showPassword,
@@ -167,21 +165,26 @@ class _LoginPageState extends State<LoginPage> {
                                         20, 15, 20, 15)),
                               ),
                             ),
-                            const SizedBox(
-                              height: 16,
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const ResetPassScreen()));
+                                  },
+                                  child: const Text("Forgot your Password?"),
+                                ),
+                              ),
                             ),
                             GestureDetector(
                               onTap: () async {
-                                // AuthController.instance.login(
-                                //     emailController.text.trim(),
-                                //     passwordController.text.trim());
                                 _formkey.currentState!.save();
                                 try {
                                   final user =
                                       await auth.signInWithEmailAndPassword(
                                           email: emailController.trim(),
-                                          password:
-                                              passwordController.trim());
+                                          password: passwordController.trim());
                                   if (user != null) {
                                     Navigator.of(context)
                                         .pushNamed(MyRoutes.dashboard);
@@ -208,8 +211,6 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               },
                               child: Container(
-                                // width: MediaQuery.of(context).size.width / 4,
-                                // height: MediaQuery.of(context).size.height / 18,
                                 height: 50,
                                 width: 110,
                                 margin:
