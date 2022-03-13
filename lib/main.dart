@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_auth/email_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +48,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  // await Firebase.initializeApp().then((value) => Get.put(AuthController()));
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -117,53 +114,13 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   bool changeButton = false;
   bool submitValid = false;
-    // final TextEditingController _emailcontroller = TextEditingController();
-  // final TextEditingController _otpController = TextEditingController();
   String _emailController = "";
   String _passwordController = "";
-  // final String _otpcontroller = "";
+  String _cnfPassController = "";
 
   final auth = FirebaseAuth.instance;
 
-  // late EmailAuth emailAuth;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Initialize the package
-  //   emailAuth = EmailAuth(
-  //     sessionName: "Sample session",
-  //   );
-  // }
-
-  // void verify() {
-  //   var result = emailAuth.validateOtp(
-  //       recipientMail: _emailcontroller.value.text, userOtp: _otpController.value.text);
-  //   if (result) {
-  //     print("otp validated");
-  //   } else {
-  //     print("invalid otp");
-  //   }
-  // }
-
-  // void sendOtp() async {
-  //   var result =
-  //       await emailAuth.sendOtp(recipientMail: _emailcontroller.value.text, otpLength: 5);
-  //   if (result) {
-  //     // setState(() {
-  //     //   submitValid = true;
-  //     // });
-  //     print("otp sent");
-  //   }
-  // }
-
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  bool _showPass = false;
-  void _toggle() {
-    setState(() {
-      _showPass = !_showPass;
-    });
-  }
 
   bool _show = false;
   void _visible() {
@@ -171,7 +128,14 @@ class _FirstScreenState extends State<FirstScreen> {
       _show = !_show;
     });
   }
-  
+
+  bool _see = false;
+  void _toggle() {
+    setState(() {
+      _see = !_see;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,12 +151,6 @@ class _FirstScreenState extends State<FirstScreen> {
                     image: AssetImage('assets/images/blue-wallpaper-7.jpg'),
                     fit: BoxFit.cover,
                   ),
-                  // child:Image.asset('assets/images/blue-wallpaper-7.jpg'),
-                  // decoration: const BoxDecoration(
-                  //   image: DecorationImage(
-
-                  //   ),
-                  // ),
                 ),
                 const Positioned(
                   top: 120,
@@ -205,9 +163,6 @@ class _FirstScreenState extends State<FirstScreen> {
                         color: Colors.black),
                   ),
                 ),
-                // const SizedBox(
-                //   height: 30,
-                // ),
                 const Positioned(
                   top: 190,
                   left: 50,
@@ -225,7 +180,6 @@ class _FirstScreenState extends State<FirstScreen> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.67,
-              // height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 30),
               color: Colors.white,
               child: SingleChildScrollView(
@@ -251,50 +205,17 @@ class _FirstScreenState extends State<FirstScreen> {
                                     onSaved: (emailValue) {
                                       _emailController = emailValue!;
                                     },
-                                    // controller: _emailcontroller,
                                     decoration: InputDecoration(
                                       hintText: "Email",
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
-                                      // errorStyle: TextStyle(color: Colors.black),    //firebase
                                     ),
                                   ),
-                                  // InkWell(
-                                  //     onTap: () => sendOtp(),
-                                  //     child: const Text("Get OTP")),
-                                  // TextFormField(
-                                  //   // onSaved: (passValue) {
-                                  //   //   _passwordController = passValue!;
-                                  //   // },
-                                  //   controller: _otpController,
-                                  //   obscureText: !_showPass,
-                                  //   decoration: InputDecoration(
-                                  //     // suffixIcon: GestureDetector(
-                                  //     //   onTap: () {
-                                  //     //     _toggle();
-                                  //     //   },
-                                  //     //   child: Icon(
-                                  //     //     _showPass
-                                  //     //         ? Icons.visibility
-                                  //     //         : Icons.visibility_off,
-                                  //     //     color: Colors.grey,
-                                  //     //   ),
-                                  //     // ),
-                                  //     hintText: "Enter OTP",
-                                  //     border: OutlineInputBorder(
-                                  //       borderRadius: BorderRadius.circular(30),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // InkWell(
-                                  //     onTap: () => verify(),
-                                  //     child: const Text("Validate")),
                                   TextFormField(
                                     onSaved: (passValue) {
                                       _passwordController = passValue!;
                                     },
-                                    // controller: cnfPassControlller,
                                     obscureText: !_show,
                                     decoration: InputDecoration(
                                         suffixIcon: GestureDetector(
@@ -314,21 +235,54 @@ class _FirstScreenState extends State<FirstScreen> {
                                               BorderRadius.circular(30),
                                         )),
                                   ),
+                                  TextFormField(
+                                    onSaved: (cnfpassValue) {
+                                      _cnfPassController = cnfpassValue!;
+                                    },
+                                    obscureText: !_see,
+                                    decoration: InputDecoration(
+                                        suffixIcon: GestureDetector(
+                                          onTap: () {
+                                            _toggle();
+                                          },
+                                          child: Icon(
+                                            _see
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        hintText: "Re-enter password",
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 100,
+                                  ),
                                   InkWell(
                                     onTap: () async {
-                                      if (_passwordController.trim() != null) {
+                                      if (_passwordController.trim() ==
+                                          _cnfPassController.trim()) {
+                                        setState(() {
+                                            changeButton = true;
+                                          });
+                                          await Future.delayed(
+                                              const Duration(seconds: 1));    
                                         formkey.currentState!.save();
                                         try {
-                                          final newUser = await auth
+                                          await auth
                                               .createUserWithEmailAndPassword(
                                                   email:
                                                       _emailController.trim(),
                                                   password: _passwordController
-                                                      .trim());
-                                          if (newUser != null) {
-                                            Navigator.pushNamed(
-                                                context, MyRoutes.otpscreen);
-                                          }
+                                                      .trim())
+                                              .then((value) => Navigator.of(
+                                                      context)
+                                                  .push(MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const OtpScreen())));
                                         } catch (e) {
                                           Get.snackbar(
                                             "About Account",
@@ -349,12 +303,14 @@ class _FirstScreenState extends State<FirstScreen> {
                                             ),
                                           );
                                         }
-                                        if (_passwordController == null) {
-                                          setState(() {
-                                            changeButton = true;
-                                          });
-                                          await Future.delayed(
-                                              const Duration(seconds: 1));
+                                        if (_passwordController ==
+                                            _cnfPassController) {
+                                          // setState(() {
+                                          //   changeButton = true;
+                                          // });
+                                          // await Future.delayed(
+                                          //     const Duration(seconds: 1));
+                                          print("ok");
                                         }
                                       } else {
                                         Get.snackbar(
@@ -402,59 +358,17 @@ class _FirstScreenState extends State<FirstScreen> {
                                             ),
                                     ),
                                   ),
-                                  // InkWell(
-                                  //   onTap: () {
-                                  //     if (_cnfPassControlller.trim() ==_passwordController.trim()  ) {
-                                  //       formkey.currentState!.save();
-                                  //        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OtpScreen()));
-
-                                  //     }else{
-                                  //       Get.snackbar(
-                                  //           "About Account",
-                                  //           " Account message",
-                                  //           backgroundColor: Colors.blue,
-                                  //           snackPosition: SnackPosition.BOTTOM,
-                                  //           titleText: const Text(
-                                  //             "Account creation failed",
-                                  //             style: TextStyle(
-                                  //               color: Colors.white,
-                                  //             ),
-                                  //           ),
-                                  //           messageText: const Text("Password didn't matched or Email not provided",
-                                  //             style: TextStyle(
-                                  //               color: Colors.white,
-                                  //             ),
-                                  //           ),
-                                  //         );
-
-                                  //     }
-                                  //   },
-                                  //   child: Container(
-                                  //     height: 40,
-                                  //     width: 100,
-                                  //     alignment: Alignment.center,
-                                  //     decoration: BoxDecoration(
-                                  //       color: Colors.blue,
-                                  //       borderRadius:  BorderRadius.circular(40)
-                                  //     ),
-                                  //     child: const Text("Get OTP",
-                                  //       style: TextStyle(
-                                  //         fontSize: 17,
-                                  //         color: Colors.white,
-                                  //         fontWeight: FontWeight.bold,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   Row(
                                     children: [
                                       const Text(
                                         "Already have an account?",
                                         style: TextStyle(
-                                          // fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                           color: Colors.grey,
                                         ),
+                                      ),
+                                      const SizedBox(
+                                        width: 90,
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -462,7 +376,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                               context, MyRoutes.login);
                                         },
                                         child: const Text(
-                                          "         Login    ",
+                                          "Login",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -481,9 +395,6 @@ class _FirstScreenState extends State<FirstScreen> {
                                           ),
                                           InkWell(
                                             child: Container(
-                                              //for adaptive height and width
-                                              // width: MediaQuery.of(context).size.width / 2,
-                                              // height: MediaQuery.of(context).size.height / 18,
                                               height: 45,
                                               width: 220,
                                               margin: const EdgeInsets.only(
@@ -528,12 +439,10 @@ class _FirstScreenState extends State<FirstScreen> {
                                                   context,
                                                   listen: false);
                                               provider.googleLogin();
-                                            }, //function for google
+                                            },
                                           ),
                                           InkWell(
                                             child: Container(
-                                              // width: MediaQuery.of(context).size.width / 2,
-                                              // height: MediaQuery.of(context).size.height / 18,
                                               height: 45,
                                               width: 220,
                                               margin: const EdgeInsets.only(
