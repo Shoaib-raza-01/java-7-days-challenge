@@ -83,7 +83,7 @@ class ArrayPage extends StatelessWidget {
                                               );
                                             },
                                             transitionDuration:
-                                                Duration(milliseconds: 200),
+                                                const Duration(milliseconds: 200),
                                             barrierDismissible: true,
                                             barrierLabel: '',
                                             pageBuilder: (context, animation1,

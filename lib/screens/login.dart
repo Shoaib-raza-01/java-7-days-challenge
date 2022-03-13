@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jsdc/screens/otp_screen.dart';
 import 'package:jsdc/screens/reset_pass.dart';
 import 'package:jsdc/util/routes.dart';
 
@@ -171,7 +172,10 @@ class _LoginPageState extends State<LoginPage> {
                                 alignment: Alignment.bottomRight,
                                 child: TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const ResetPassScreen()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ResetPassScreen()));
                                   },
                                   child: const Text("Forgot your Password?"),
                                 ),
@@ -181,14 +185,17 @@ class _LoginPageState extends State<LoginPage> {
                               onTap: () async {
                                 _formkey.currentState!.save();
                                 try {
-                                  final user =
-                                      await auth.signInWithEmailAndPassword(
-                                          email: emailController.trim(),
-                                          password: passwordController.trim());
-                                  if (user != null) {
-                                    Navigator.of(context)
-                                        .pushNamed(MyRoutes.dashboard);
-                                  }
+                                  
+                                    await auth.signInWithEmailAndPassword(
+                                        email: emailController.trim(),
+                                        password: passwordController.trim()).whenComplete(() =>  Navigator.of(context)
+                                        .pushNamed(MyRoutes.dashboard));
+                                    // .then((value) => Navigator.of(context)
+                                    //     .pushNamed(MyRoutes.dashboard));
+                                  // if (user != null) {
+                                  //   Navigator.of(context)
+                                  //       .pushNamed(MyRoutes.dashboard);
+                                  // }
                                 } catch (e) {
                                   Get.snackbar(
                                     "About Login",
@@ -201,9 +208,9 @@ class _LoginPageState extends State<LoginPage> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    messageText: const Text(
-                                      "Field can't be empty",
-                                      style: TextStyle(
+                                    messageText: Text(
+                                      e.toString(),
+                                      style: const TextStyle(
                                         color: Colors.white,
                                       ),
                                     ),
@@ -258,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ]),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             )
                           ],

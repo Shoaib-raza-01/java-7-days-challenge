@@ -9,7 +9,7 @@ class TopicsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("JAVA Tutorial"),
+        title: const Text("JAVA Tutorial"),
       ),
       body: ListView(
         children: [

@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -98,8 +97,30 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  auth.sendPasswordResetEmail(email: resetEmail);
+                onPressed: () {try {
+                  auth.sendPasswordResetEmail(email: resetEmail.trim());
+                } catch (e) {
+                  if (e ==" [firebase_auth/user-not-found") {
+                    Get.snackbar(
+                      "About Email",
+                      "Email message",
+                      backgroundColor: Colors.blue,
+                      snackPosition: SnackPosition.BOTTOM,
+                      titleText: const Text(
+                        "Error",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      messageText:const Text("There is no user record corresponding to this email. The user may have been deleted.",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                }
+                  
                 },
                 child: const Text("Get Reset Link"),
               ),
