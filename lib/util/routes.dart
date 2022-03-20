@@ -18,4 +18,5 @@ class MyRoutes {
   static String oopconcept = "/oops";
   static String resumeform = "/resumepage";
   static String otpscreen = "/otp";
+  static String courses = "/course";
 }

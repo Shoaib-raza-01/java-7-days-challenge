@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jsdc/screens/otp_screen.dart';
 import 'package:jsdc/screens/reset_pass.dart';
 import 'package:jsdc/util/routes.dart';
 
@@ -62,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(
                           top: 5.0, bottom: 15.0, left: 10, right: 10.0),
                       child: Card(
-                        // color: Colors.amber[50],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
@@ -85,7 +83,6 @@ class _LoginPageState extends State<LoginPage> {
                                 onSaved: (newEmail) {
                                   emailController = newEmail!;
                                 },
-                                // controller: emailController,
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -113,28 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onSaved: (newPassword) {
                                   passwordController = newPassword!;
                                 },
-                                // controller: passwordController,
                                 obscureText: !_showPassword,
-
-                                // Get.snackbar(
-                                //   "About password",
-                                //   " Password message",
-                                //   backgroundColor: Colors.blue,
-                                //   snackPosition: SnackPosition.BOTTOM,
-                                //   titleText: const Text(
-                                //     "Invalid password",
-                                //     style: TextStyle(
-                                //       color: Colors.white,
-                                //     ),
-                                //   ),
-                                //   messageText: const Text(
-                                //     "Field can't be empty",
-                                //     style: TextStyle(
-                                //       color: Colors.white,
-                                //     ),
-                                //   ),
-                                // );
-
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -185,17 +161,11 @@ class _LoginPageState extends State<LoginPage> {
                               onTap: () async {
                                 _formkey.currentState!.save();
                                 try {
-                                  
+                                     
                                     await auth.signInWithEmailAndPassword(
                                         email: emailController.trim(),
                                         password: passwordController.trim()).whenComplete(() =>  Navigator.of(context)
                                         .pushNamed(MyRoutes.dashboard));
-                                    // .then((value) => Navigator.of(context)
-                                    //     .pushNamed(MyRoutes.dashboard));
-                                  // if (user != null) {
-                                  //   Navigator.of(context)
-                                  //       .pushNamed(MyRoutes.dashboard);
-                                  // }
                                 } catch (e) {
                                   Get.snackbar(
                                     "About Login",

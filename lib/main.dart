@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:jsdc/screens/array.dart';
 import 'package:jsdc/screens/bool_string.dart';
+import 'package:jsdc/screens/courses.dart';
 import 'package:jsdc/screens/if_else_stats.dart';
 import 'package:jsdc/screens/jump_stats.dart';
 import 'package:jsdc/screens/loops.dart';
@@ -43,7 +44,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('A bg message just showed up : ${message.messageId}');
 }
 
-Future<void> main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
@@ -61,7 +62,6 @@ Future<void> main() async {
     badge: true,
     sound: true,
   );
-
   runApp(const MyApp());
 }
 
@@ -99,6 +99,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.oopconcept: (context) => const OOPconceptPage(),
             MyRoutes.resumeform: (context) => const ResumeFormPage(),
             MyRoutes.otpscreen: (context) => const OtpScreen(),
+            MyRoutes.courses: (context) => const CoursesPage(),
           },
         ),
       );
@@ -266,10 +267,10 @@ class _FirstScreenState extends State<FirstScreen> {
                                       if (_passwordController.trim() ==
                                           _cnfPassController.trim()) {
                                         setState(() {
-                                            changeButton = true;
-                                          });
-                                          await Future.delayed(
-                                              const Duration(seconds: 1));    
+                                          changeButton = true;
+                                        });
+                                        await Future.delayed(
+                                            const Duration(seconds: 1));
                                         formkey.currentState!.save();
                                         try {
                                           await auth
@@ -302,15 +303,6 @@ class _FirstScreenState extends State<FirstScreen> {
                                               ),
                                             ),
                                           );
-                                        }
-                                        if (_passwordController ==
-                                            _cnfPassController) {
-                                          // setState(() {
-                                          //   changeButton = true;
-                                          // });
-                                          // await Future.delayed(
-                                          //     const Duration(seconds: 1));
-                                          print("ok");
                                         }
                                       } else {
                                         Get.snackbar(

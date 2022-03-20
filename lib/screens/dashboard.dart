@@ -35,6 +35,7 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
       drawer: Drawer(
+        backgroundColor: Colors.white,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -74,14 +75,17 @@ class _DashboardState extends State<Dashboard> {
               leading: const Icon(Icons.file_copy_rounded),
               title: const Text("Create resume"),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResumeFormPage()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ResumeFormPage()));
                 // Navigator.of(context).pushNamed(MyRoutes.resumeform);
               },
             ),
             ListTile(
               leading: const Icon(Icons.computer_outlined),
               title: const Text("Courses"),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(MyRoutes.courses);
+              },
             ),
             ListTile(
               leading: const Icon(Icons.question_answer_outlined),
