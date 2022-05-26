@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 class IfElseStatPage extends StatelessWidget {
-  const IfElseStatPage({ Key? key }) : super(key: key);
+  const IfElseStatPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,8 @@ class IfElseStatPage extends StatelessWidget {
         ),
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance.collection("ifElseStats").snapshots(),
+        stream:
+            FirebaseFirestore.instance.collection("ifElseStats").snapshots(),
         builder: (context, snapshots) {
           if (snapshots.hasData) {
             return ListView.builder(
@@ -82,8 +84,8 @@ class IfElseStatPage extends StatelessWidget {
                                                 ),
                                               );
                                             },
-                                            transitionDuration:
-                                                const Duration(milliseconds: 200),
+                                            transitionDuration: const Duration(
+                                                milliseconds: 200),
                                             barrierDismissible: true,
                                             barrierLabel: '',
                                             pageBuilder: (context, animation1,

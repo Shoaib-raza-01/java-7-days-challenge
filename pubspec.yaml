@@ -42,6 +42,7 @@ dependencies:
   auto_size_text: ^3.0.0 
   email_auth: ^1.0.0  
   gsheets: ^0.3.2   
+  water_drop_nav_bar: ^2.2.0+2
   
 
 

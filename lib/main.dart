@@ -266,11 +266,11 @@ class _FirstScreenState extends State<FirstScreen> {
                                     onTap: () async {
                                       if (_passwordController.trim() ==
                                           _cnfPassController.trim()) {
-                                        setState(() {
-                                          changeButton = true;
-                                        });
-                                        await Future.delayed(
-                                            const Duration(seconds: 1));
+                                        // setState(() {
+                                        //   changeButton = true;
+                                        // });
+                                        // await Future.delayed(
+                                        //     const Duration(seconds: 1));
                                         formkey.currentState!.save();
                                         try {
                                           await auth
