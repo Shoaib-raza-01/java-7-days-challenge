@@ -97,10 +97,10 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {try {
-                  auth.sendPasswordResetEmail(email: resetEmail.trim());
-                } catch (e) {
-                  if (e ==" [firebase_auth/user-not-found") {
+                onPressed: () {
+                  try {
+                    auth.sendPasswordResetEmail(email: resetEmail.trim());
+                  } catch (e) {
                     Get.snackbar(
                       "About Email",
                       "Email message",
@@ -112,15 +112,14 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      messageText:const Text("There is no user record corresponding to this email. The user may have been deleted.",
+                      messageText: const Text(
+                        "There is no user record corresponding to this email. The user may have been deleted.",
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     );
                   }
-                }
-                  
                 },
                 child: const Text("Get Reset Link"),
               ),

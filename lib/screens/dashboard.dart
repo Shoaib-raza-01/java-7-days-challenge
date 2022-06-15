@@ -233,25 +233,24 @@ class _DashboardState extends State<Dashboard>
                     Container(
                       height: MediaQuery.of(context).size.height / 3,
                       width: MediaQuery.of(context).size.width,
-                      color: Colors.black,
+                      // color: Colors.black,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          color: Colors.brown,
+                          color: Colors.grey[400],
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 // Container(
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, bottom: 8, top: 10),
+                                  padding: const EdgeInsets.all(9),
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: Container(
+                                        child: SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height /
@@ -265,47 +264,78 @@ class _DashboardState extends State<Dashboard>
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                             ),
-                                            color: Colors.amber,
-                                            child: Text("Core Java"),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Expanded(
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                7.5,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.5,
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
+                                            color: Colors.white,
+                                            child: Center(
+                                              child: Column(
+                                                children: const [
+                                                  SizedBox(
+                                                    height: 60,
+                                                    width: 40,
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Image(
+                                                        image: AssetImage(
+                                                            'assets/images/java_logo.png'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text("CORE JAVA"),
+                                                ],
                                               ),
-                                              color: Colors.amber,
-                                              child: Text("data2"),
                                             ),
                                           ),
                                         ),
-                                      )
+                                      ),
+                                      Expanded(
+                                        child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              7.5,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.5,
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            color: Colors.white,
+                                            child: Center(
+                                              child: Column(
+                                                children: const [
+                                                  SizedBox(
+                                                    height: 60,
+                                                    width: 40,
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Image(
+                                                        image: AssetImage(
+                                                            'assets/images/java_logo.png'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text("ADVANCED JAVA"),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 // ),
                                 // Container(
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, bottom: 8, top: 8),
+                                  padding: const EdgeInsets.all(9),
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: Container(
+                                        child: SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height /
@@ -319,35 +349,73 @@ class _DashboardState extends State<Dashboard>
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                             ),
-                                            color: Colors.amber,
-                                            child: Text("data3"),
+                                            color: Colors.white,
+                                            child: Center(
+                                              child: Column(
+                                                children: const [
+                                                  SizedBox(
+                                                    height: 60,
+                                                    width: 40,
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Image(
+                                                        image: AssetImage(
+                                                            'assets/images/resume_logo.jpg'),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text("RESUME BUILDER"),
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Expanded(
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                7.5,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.5,
+                                      Expanded(
+                                        child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              7.5,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.5,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .pushNamed(MyRoutes.buy);
+                                            },
                                             child: Card(
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20.0),
                                               ),
-                                              color: Colors.amber,
-                                              child: Text("data4"),
+                                              color: Colors.white,
+                                              child: Center(
+                                                child: Column(
+                                                  children: const [
+                                                    SizedBox(
+                                                      height: 60,
+                                                      width: 40,
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        child: Image(
+                                                          image: AssetImage(
+                                                              'assets/images/question_logo.png'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Text("INTERVIEW QUESTIONS"),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -911,7 +979,21 @@ class _DashboardState extends State<Dashboard>
                   ),
                   Text("resumes"),
                   Text("data"),
-                  Text("Sign out"),
+                  InkWell(
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut().whenComplete(
+                              () => Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => const FirstScreen()),
+                              ),
+                            );
+
+                        //  FirebaseAuth.instance.signOut().then()=>Navigator.of(context).pushReplacement(
+                        //         MaterialPageRoute(
+                        //             builder: (context) => const FirstScreen()),
+                        //       );
+                      },
+                      child: Text("Sign out")),
                 ],
               ),
             ),
@@ -931,8 +1013,8 @@ class _DashboardState extends State<Dashboard>
           selectedIndex: selectedIndex,
           barItems: <BarItem>[
             BarItem(
-              filledIcon: Icons.bookmark_rounded,
-              outlinedIcon: Icons.bookmark_border_rounded,
+              filledIcon: Icons.home_rounded,
+              outlinedIcon: Icons.home_outlined,
             ),
             BarItem(
                 filledIcon: Icons.favorite_rounded,
@@ -951,6 +1033,7 @@ class _DashboardState extends State<Dashboard>
     );
   }
 }
+
 
 // GridView.extent(
 //                         maxCrossAxisExtent: 200,
@@ -1109,28 +1192,28 @@ class _DashboardState extends State<Dashboard>
 //           title: const Text("Settings"),
 //           onTap: () {},
 //         ),
-//         ListTile(
-//           title: const Text("Sign out"),
-//           onTap: () async {
-//             // google logout method
-//             // final provider =
-//             //     Provider.of<GoogleSignInProvider>(context, listen: false);
-//             // provider.logout();
-//             // AuthController.instance.logOut();
-//             // Navigator.of(context).pushAndRemoveUntil(
-//             //   MaterialPageRoute(
-//             //     builder: (BuildContext) => FirstScreen(),
-//             //   ),
-//             //   (Route route) => false,
-//             // );
-//             await FirebaseAuth.instance.signOut().whenComplete(
-//                   () => Navigator.of(context).pushReplacement(
-//                     MaterialPageRoute(
-//                         builder: (context) => const FirstScreen()),
-//                   ),
-//                 );
-//           },
-//         ),
-//       ],
-//     ),
+    //     ListTile(
+    //       title: const Text("Sign out"),
+    //       onTap: () async {
+    //         // google logout method
+    //         // final provider =
+    //         //     Provider.of<GoogleSignInProvider>(context, listen: false);
+    //         // provider.logout();
+    //         // AuthController.instance.logOut();
+    //         // Navigator.of(context).pushAndRemoveUntil(
+    //         //   MaterialPageRoute(
+    //         //     builder: (BuildContext) => FirstScreen(),
+    //         //   ),
+    //         //   (Route route) => false,
+    //         // );
+    //         await FirebaseAuth.instance.signOut().whenComplete(
+    //               () => Navigator.of(context).pushReplacement(
+    //                 MaterialPageRoute(
+    //                     builder: (context) => const FirstScreen()),
+    //               ),
+    //             );
+    //       },
+    //     ),
+    //   ],
+    // ),
 //   ),

@@ -19,4 +19,5 @@ class MyRoutes {
   static String resumeform = "/resumepage";
   static String otpscreen = "/otp";
   static String courses = "/course";
+  static String buy = "/buy";
 }

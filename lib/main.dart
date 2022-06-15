@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:jsdc/screens/array.dart';
 import 'package:jsdc/screens/bool_string.dart';
+import 'package:jsdc/screens/buy.dart';
 import 'package:jsdc/screens/courses.dart';
 import 'package:jsdc/screens/if_else_stats.dart';
 import 'package:jsdc/screens/jump_stats.dart';
@@ -41,7 +42,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('A bg message just showed up : ${message.messageId}');
+  // print('A bg message just showed up : ${message.messageId}');
 }
 
 Future main() async {
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
             MyRoutes.resumeform: (context) => const ResumeFormPage(),
             MyRoutes.otpscreen: (context) => const OtpScreen(),
             MyRoutes.courses: (context) => const CoursesPage(),
+            MyRoutes.buy: (context) => const BuyScreen(),
           },
         ),
       );
