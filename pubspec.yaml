@@ -43,6 +43,7 @@ dependencies:
   email_auth: ^1.0.0  
   gsheets: ^0.3.2   
   water_drop_nav_bar: ^2.2.0+2
+  youtube_player_flutter: ^8.1.0
   
 
 

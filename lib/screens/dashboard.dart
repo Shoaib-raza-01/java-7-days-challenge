@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:jsdc/main.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../util/routes.dart';
 
@@ -23,6 +23,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
+  late YoutubePlayerController _controller;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController numberController = TextEditingController();
@@ -44,6 +45,18 @@ class _DashboardState extends State<Dashboard>
   @override
   void initState() {
     super.initState();
+    //youtube controller
+    const url = "https://www.youtube.com/watch?v=y8trd3gjJt0";
+    _controller = YoutubePlayerController(
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+          loop: false,
+          disableDragSeek: true,
+          // showLiveFullscreenButton: false
+        ),
+        initialVideoId: YoutubePlayer.convertUrlToId(url)!);
+
     pageController = PageController(initialPage: selectedIndex);
 
     //for tick controller in courses card
@@ -101,6 +114,18 @@ class _DashboardState extends State<Dashboard>
             });
       }
     });
+  }
+
+  @override
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Future<void> _submitForm() async {
@@ -211,26 +236,52 @@ class _DashboardState extends State<Dashboard>
                     //     ),
                     //   ),
                     // ),
-                    Container(
-                      height: MediaQuery.of(context).size.height / 6,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.blue,
-                      child: Row(
-                        children: [
-                          Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: Text("banner1\n\n\n\n\n\n\n"),
-                          ),
-                          Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: Text("banner2"),
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width,
+                        child:
+                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          stream: FirebaseFirestore.instance
+                              .collection("Banners")
+                              .snapshots(),
+                          builder: (context, snapshots) {
+                            if (snapshots.hasData) {
+                              return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshots.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot questions =
+                                        snapshots.data!.docs[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
+                                      child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                6,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        child: Image(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(
+                                                questions['picUrl'])),
+                                      ),
+                                    );
+                                  });
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.blue,
+                              ));
+                            }
+                          },
+                        ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height / 3,
                       width: MediaQuery.of(context).size.width,
                       // color: Colors.black,
@@ -426,11 +477,81 @@ class _DashboardState extends State<Dashboard>
                         ),
                       ),
                     ),
-                    Container(
-                      height: MediaQuery.of(context).size.height / 4,
+                    SizedBox(
+                      height: 40.0,
                       width: MediaQuery.of(context).size.width,
-                      color: Colors.green,
-                      child: Text("Youtube Videos"),
+                      child: Row(
+                        children: <Widget>[
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Videos",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.6,
+                          ),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "More",
+                                style: TextStyle(
+                                  color: Colors.deepPurple[600],
+                                ),
+                              ))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 4,
+                        width: MediaQuery.of(context).size.width,
+                        child: YoutubePlayerBuilder(
+                          player: YoutubePlayer(
+                            controller: _controller,
+                            bottomActions: [
+                              CurrentPosition(),
+                              ProgressBar(isExpanded: true),
+                              RemainingDuration(),
+                              const PlaybackSpeedButton()
+                            ],
+                          ),
+                          builder: (context, player) {
+                            return Row(
+                              children: [
+                                player,
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Text(
+                        "Get Your Fortune Career",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Color.fromARGB(255, 75, 72, 72),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0),
+                      child: Text(
+                        "Join Us To Get Closer To Your Offer Letter",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                     Transform(
                       alignment: FractionalOffset.center,
@@ -973,12 +1094,12 @@ class _DashboardState extends State<Dashboard>
                     height: MediaQuery.of(context).size.height / 3,
                     width: MediaQuery.of(context).size.width,
                     color: Colors.grey,
-                    child: Center(
+                    child: const Center(
                       child: Text("profile pic"),
                     ),
                   ),
-                  Text("resumes"),
-                  Text("data"),
+                  const Text("resumes"),
+                  const Text("data"),
                   InkWell(
                       onTap: () async {
                         await FirebaseAuth.instance.signOut().whenComplete(
@@ -987,13 +1108,8 @@ class _DashboardState extends State<Dashboard>
                                     builder: (context) => const FirstScreen()),
                               ),
                             );
-
-                        //  FirebaseAuth.instance.signOut().then()=>Navigator.of(context).pushReplacement(
-                        //         MaterialPageRoute(
-                        //             builder: (context) => const FirstScreen()),
-                        //       );
                       },
-                      child: Text("Sign out")),
+                      child: const Text("Sign out")),
                 ],
               ),
             ),
@@ -1001,7 +1117,7 @@ class _DashboardState extends State<Dashboard>
         ),
         bottomNavigationBar: WaterDropNavBar(
           backgroundColor: navigationBarColor,
-          bottomPadding: 8,
+          bottomPadding: 10,
           onItemSelected: (int index) {
             setState(() {
               selectedIndex = index;
@@ -1033,7 +1149,6 @@ class _DashboardState extends State<Dashboard>
     );
   }
 }
-
 
 // GridView.extent(
 //                         maxCrossAxisExtent: 200,
@@ -1192,28 +1307,28 @@ class _DashboardState extends State<Dashboard>
 //           title: const Text("Settings"),
 //           onTap: () {},
 //         ),
-    //     ListTile(
-    //       title: const Text("Sign out"),
-    //       onTap: () async {
-    //         // google logout method
-    //         // final provider =
-    //         //     Provider.of<GoogleSignInProvider>(context, listen: false);
-    //         // provider.logout();
-    //         // AuthController.instance.logOut();
-    //         // Navigator.of(context).pushAndRemoveUntil(
-    //         //   MaterialPageRoute(
-    //         //     builder: (BuildContext) => FirstScreen(),
-    //         //   ),
-    //         //   (Route route) => false,
-    //         // );
-    //         await FirebaseAuth.instance.signOut().whenComplete(
-    //               () => Navigator.of(context).pushReplacement(
-    //                 MaterialPageRoute(
-    //                     builder: (context) => const FirstScreen()),
-    //               ),
-    //             );
-    //       },
-    //     ),
-    //   ],
-    // ),
+//     ListTile(
+//       title: const Text("Sign out"),
+//       onTap: () async {
+//         // google logout method
+//         // final provider =
+//         //     Provider.of<GoogleSignInProvider>(context, listen: false);
+//         // provider.logout();
+//         // AuthController.instance.logOut();
+//         // Navigator.of(context).pushAndRemoveUntil(
+//         //   MaterialPageRoute(
+//         //     builder: (BuildContext) => FirstScreen(),
+//         //   ),
+//         //   (Route route) => false,
+//         // );
+//         await FirebaseAuth.instance.signOut().whenComplete(
+//               () => Navigator.of(context).pushReplacement(
+//                 MaterialPageRoute(
+//                     builder: (context) => const FirstScreen()),
+//               ),
+//             );
+//       },
+//     ),
+//   ],
+// ),
 //   ),

@@ -17,7 +17,7 @@ class LoggingIn extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasData) {
-                return const OtpScreen();
+                return const Dashboard();
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("Something went wrong...."),
