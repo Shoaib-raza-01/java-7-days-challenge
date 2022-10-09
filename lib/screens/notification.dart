@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -60,8 +59,7 @@ class _NotificationPageState extends State<NotificationPage> {
               );
             });
       }
-    }
-    );
+    });
   }
 
   @override
@@ -83,7 +81,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed(MyRoutes.topics);
+                          Navigator.of(context).pushNamed(MyRoutes.dashboard);
                         },
                         child: Card(
                           // shape: RoundedRectangleBorder(

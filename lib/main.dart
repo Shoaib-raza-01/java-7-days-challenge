@@ -2,27 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:jsdc/screens/array.dart';
-import 'package:jsdc/screens/bool_string.dart';
 import 'package:jsdc/screens/buy.dart';
 import 'package:jsdc/screens/courses.dart';
-import 'package:jsdc/screens/if_else_stats.dart';
-import 'package:jsdc/screens/jump_stats.dart';
-import 'package:jsdc/screens/loops.dart';
-import 'package:jsdc/screens/oop_concept.dart';
-import 'package:jsdc/screens/operator_math.dart';
 import 'package:jsdc/screens/otp_screen.dart';
 import 'package:jsdc/screens/resume_page.dart';
-import 'package:jsdc/screens/sort_search.dart';
-import 'package:jsdc/screens/switchcase.dart';
-import 'package:jsdc/screens/syntax.dart';
 import 'package:jsdc/screens/contact.dart';
 import 'package:jsdc/screens/dashboard.dart';
-import 'package:jsdc/screens/datatypes.dart';
 import 'package:jsdc/screens/login.dart';
 import 'package:jsdc/screens/notification.dart';
-import 'package:jsdc/screens/topics.dart';
-import 'package:jsdc/screens/variables.dart';
 import 'package:jsdc/util/google_SignIn.dart';
 import 'package:jsdc/util/loggingin.dart';
 import 'package:jsdc/util/routes.dart';
@@ -83,21 +70,8 @@ class MyApp extends StatelessWidget {
           routes: {
             MyRoutes.dashboard: (context) => const Dashboard(),
             MyRoutes.login: (context) => const LoginPage(),
-            MyRoutes.syntax: (context) => const SyntaxPage(),
             MyRoutes.notification: (context) => const NotificationPage(),
             MyRoutes.contactUs: (context) => const ContactUsPage(),
-            MyRoutes.topics: (context) => const TopicsPage(),
-            MyRoutes.variable: (context) => const VariablePage(),
-            MyRoutes.datatypes: (context) => const DatatypePage(),
-            MyRoutes.operator: (context) => const OperatorPage(),
-            MyRoutes.boolstr: (context) => const StringBoolPage(),
-            MyRoutes.ifelse: (context) => const IfElseStatPage(),
-            MyRoutes.switchcase: (context) => const SwitchCase(),
-            MyRoutes.loops: (context) => const LoopsPage(),
-            MyRoutes.jump: (context) => const JumpPage(),
-            MyRoutes.array: (context) => const ArrayPage(),
-            MyRoutes.sort: (context) => const SortSearchPage(),
-            MyRoutes.oopconcept: (context) => const OOPconceptPage(),
             MyRoutes.resumeform: (context) => const ResumeFormPage(),
             MyRoutes.otpscreen: (context) => const OtpScreen(),
             MyRoutes.courses: (context) => const CoursesPage(),

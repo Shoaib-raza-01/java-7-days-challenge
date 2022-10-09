@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:jsdc/main.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import '../util/routes.dart';
 
 class Dashboard extends StatefulWidget {
@@ -216,71 +216,256 @@ class _DashboardState extends State<Dashboard>
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 50,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(left: 15),
-                    //     child: Align(
-                    //       alignment: Alignment.centerLeft,
-                    //       child: Text(
-                    //         (() {
-                    //           if (user.displayName != null) {
-                    //             return "Hey " + user.displayName! + "\n!";
-                    //           } else {
-                    //             return "Hey " + name + "!";
-                    //           }
-                    //         })(),
-                    //         style: const TextStyle(
-                    //             fontSize: 20, fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+
                     Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 6,
-                        width: MediaQuery.of(context).size.width,
-                        child:
-                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          stream: FirebaseFirestore.instance
-                              .collection("Banners")
-                              .snapshots(),
-                          builder: (context, snapshots) {
-                            if (snapshots.hasData) {
-                              return ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: snapshots.data!.docs.length,
-                                  itemBuilder: (context, index) {
-                                    DocumentSnapshot questions =
-                                        snapshots.data!.docs[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      child: SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                6,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        child: Image(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                                questions['picUrl'])),
-                                      ),
-                                    );
-                                  });
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator(
-                                color: Colors.blue,
-                              ));
-                            }
-                          },
+                      padding: const EdgeInsets.only(right: 10, left: 10),
+                      child: CarouselSlider(
+                        items: [
+                          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                              stream: FirebaseFirestore.instance
+                                  .collection("Banners")
+                                  .snapshots(),
+                              builder: (context, snapshots) {
+                                if (snapshots.hasData) {
+                                  return ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: snapshots.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        DocumentSnapshot questions =
+                                            snapshots.data!.docs[index];
+                                        return Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5, right: 5),
+                                            child: Image(
+                                                fit: BoxFit.fill,
+                                                image: NetworkImage(
+                                                    questions['picUrl'])));
+                                      });
+                                } else {
+                                  return const Center(
+                                      child: CircularProgressIndicator(
+                                    color: Colors.blue,
+                                  ));
+                                }
+                              }),
+                        ],
+                        options: CarouselOptions(
+                          height: MediaQuery.of(context).size.height / 6,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          // aspectRatio: 16 / 9,
+                          // enableInfiniteScroll: true,
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          // viewportFraction: 0.8,
                         ),
                       ),
                     ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.only(right: 10, left: 10),
+                    //   child:
+                    //       SizedBox(
+                    //       height: MediaQuery.of(context).size.height / 6,
+                    //       width: 200,
+                    //       child:
+                    //       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    //           stream: FirebaseFirestore.instance
+                    //               .collection("Banners")
+                    //               .snapshots(),
+                    //           builder: (context, snapshots) {
+                    //             if (snapshots.hasData) {
+                    //               return ListView.builder(
+                    //                 shrinkWrap: true,
+                    //                   scrollDirection: Axis.horizontal,
+                    //                   itemCount: snapshots.data!.docs.length,
+                    //                   itemBuilder: (context, index) {
+                    //                     DocumentSnapshot questions =
+                    //                         snapshots.data!.docs[index];
+                    //                     return Padding(
+                    //                         padding: const EdgeInsets.only(
+                    //                             left: 5, right: 5),
+                    //                         child: CarouselSlider(
+                    //                           items: [
+                    //                             Container(
+                    //                               margin:
+                    //                                   const EdgeInsets.all(6.0),
+                    //                               decoration: BoxDecoration(
+                    //                                 borderRadius:
+                    //                                     BorderRadius.circular(
+                    //                                         8.0),
+                    //                                 image: DecorationImage(
+                    //                                   image: NetworkImage(
+                    //                                       questions['picUrl']),
+                    //                                   fit: BoxFit.cover,
+                    //                                 ),
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                           options: CarouselOptions(
+                    //                             height: 180.0,
+                    //                             enlargeCenterPage: true,
+                    //                             autoPlay: true,
+                    //                             aspectRatio: 16 / 9,
+                    //                             autoPlayCurve:
+                    //                                 Curves.fastOutSlowIn,
+                    //                             enableInfiniteScroll: true,
+                    //                             autoPlayAnimationDuration:
+                    //                                 const Duration(
+                    //                                     milliseconds: 800),
+                    //                             viewportFraction: 0.8,
+                    //                           ),
+                    //                     ));
+
+                    //                   });
+                    //             } else {
+                    //               return const Center(
+                    //                   child: CircularProgressIndicator(
+                    //                 color: Colors.blue,
+                    //               ));
+                    //             }
+                    //           }),
+                    // ),
+                    // ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 10, right: 10),
+                    //   // child: CarouselSlider(
+                    //   //   items: [
+                    //   //     SizedBox(
+                    //   //       height: MediaQuery.of(context).size.height / 6,
+                    //   //       width: MediaQuery.of(context).size.width,
+                    //   //       child: StreamBuilder<
+                    //   //           QuerySnapshot<Map<String, dynamic>>>(
+                    //   //         stream: FirebaseFirestore.instance
+                    //   //             .collection("Banners")
+                    //   //             .snapshots(),
+                    //   //         builder: (context, snapshots) {
+                    //   //           if (snapshots.hasData) {
+                    //   //             return ListView.builder(
+                    //   //                 scrollDirection: Axis.horizontal,
+                    //   //                 itemCount: snapshots.data!.docs.length,
+                    //   //                 itemBuilder: (context, index) {
+                    //   //                   DocumentSnapshot questions =
+                    //   //                       snapshots.data!.docs[index];
+                    //   //                   return Padding(
+                    //   //                     padding: const EdgeInsets.only(
+                    //   //                         left: 5, right: 5),
+                    //   //                     child: SizedBox(
+                    //   //                       height: MediaQuery.of(context)
+                    //   //                               .size
+                    //   //                               .height /
+                    //   //                           6,
+                    //   //                       width: MediaQuery.of(context)
+                    //   //                               .size
+                    //   //                               .width /
+                    //   //                           2,
+                    //   //                       // child: Image(
+                    //   //                       //     fit: BoxFit.fill,
+                    //   //                       //     image: NetworkImage(
+                    //   //                       //         questions['picUrl'])),
+                    //   //                       child: Text("hello")
+                    //   //                     ),
+                    //   //                   );
+                    //   //                 });
+                    //   //           } else {
+                    //   //             return const Center(
+                    //   //                 child: CircularProgressIndicator(
+                    //   //               color: Colors.blue,
+                    //   //             ));
+                    //   //           }
+                    //   //         },
+                    //   //       ),
+                    //   //     ),
+                    //   //   ],
+                    //   //
+                    //   //
+                    //   //   // abnormal behaviour of this code
+                    //   //
+                    //   //
+                    //   //
+                    //   //   options: CarouselOptions(
+                    //   //     height: MediaQuery.of(context)
+                    //   //                               .size
+                    //   //                               .height /
+                    //   //                           6,
+                    //   //     enlargeCenterPage: true,
+                    //   //     autoPlay: true,
+                    //   //     aspectRatio: 16/9,
+                    //   //     enableInfiniteScroll: true,
+                    //   //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                    //   //     autoPlayCurve: Curves.fastOutSlowIn,
+                    //   //     viewportFraction: 0.8,
+                    //   //   ),
+                    //   // ),
+                    //   child: ListView(
+                    //     children: [
+                    //       CarouselSlider(items: [
+                    //         StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    //             stream: FirebaseFirestore.instance
+                    //                 .collection("Banners")
+                    //                 .snapshots(),
+                    //             builder: (context, snapshot) {
+                    //               if (snapshot.connectionState ==
+                    //                   ConnectionState.waiting) {
+                    //                 return const CircularProgressIndicator();
+                    //               } else if (snapshot.connectionState ==
+                    //                       ConnectionState.done ||
+                    //                   snapshot.connectionState ==
+                    //                       ConnectionState.active) {
+                    //                 if (snapshot.hasData) {
+                    //                   return ListView.builder(
+                    //                       itemCount: snapshot.data!.docs.length,
+                    //                       itemBuilder: (context, index) {
+                    //                         DocumentSnapshot pIctures =
+                    //                             snapshot.data!.docs[index];
+                    //                         return InkWell(
+                    //                           onTap: () {},
+                    //                           child: Card(
+                    //                             shape: RoundedRectangleBorder(
+                    //                                 borderRadius:
+                    //                                     BorderRadius.circular(
+                    //                                         20.0)),
+                    //                             child: Padding(
+                    //                               padding:
+                    //                                   const EdgeInsets.all(8.0),
+                    //                               child: SizedBox(
+                    //                                 height:
+                    //                                     MediaQuery.of(context)
+                    //                                             .size
+                    //                                             .height /
+                    //                                         5,
+                    //                                 width:
+                    //                                     MediaQuery.of(context)
+                    //                                             .size
+                    //                                             .width /
+                    //                                         2.9,
+                    //                                 child: Image(
+                    //                                   fit: BoxFit.fill,
+                    //                                   image: NetworkImage(
+                    //                                       pIctures['picUrl']),
+                    //                                 ),
+                    //                               ),
+                    //                             ),
+                    //                           ),
+                    //                         );
+                    //                       });
+                    //                 }
+                    //               } else if (snapshot.hasError) {
+                    //                 return const Center(
+                    //                   child: Text("Error Occured"),
+                    //                 );
+                    //               }
+                    //               // else {
+                    //               //   return const CircularProgressIndicator();
+                    //               // }
+                    //               return const CircularProgressIndicator();
+                    //             })
+                    //       ], options: CarouselOptions())
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 3,
                       width: MediaQuery.of(context).size.width,
@@ -497,10 +682,13 @@ class _DashboardState extends State<Dashboard>
                           ),
                           Align(
                               alignment: Alignment.centerRight,
-                              child: Text(
-                                "More",
-                                style: TextStyle(
-                                  color: Colors.deepPurple[600],
+                              child: InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  "More",
+                                  style: TextStyle(
+                                    color: Colors.deepPurple[600],
+                                  ),
                                 ),
                               ))
                         ],
@@ -1021,7 +1209,7 @@ class _DashboardState extends State<Dashboard>
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context)
-                                      .pushNamed(MyRoutes.topics);
+                                      .pushNamed(MyRoutes.dashboard);
                                 },
                                 child: Card(
                                   // shape: RoundedRectangleBorder(
